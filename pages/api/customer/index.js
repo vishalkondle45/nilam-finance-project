@@ -1,12 +1,12 @@
 import { getServerSession } from "next-auth";
-import connectDB from "../../middleware/mongodb";
-import Customer from "../../models/customer";
-import { authOptions } from "./auth/[...nextauth]";
+import connectDB from "../../../middleware/mongodb";
+import Customer from "../../../models/customer";
+import { authOptions } from "./../auth/[...nextauth]";
 
 const handler = async (req, res) => {
   const session = await getServerSession(req, res, authOptions);
   // Unauthorized User
-  if (session) {
+  if (!session) {
     return res.status(401).json({
       message: "You are not authorized to access this.",
       title: "Access Denied",
@@ -14,15 +14,18 @@ const handler = async (req, res) => {
       color: "red",
     });
   }
+
+  console.log(req.body);
   // New Customer
   if (req.method === "POST") {
-    let customer = new Customer(req.body);
+    let customers = await Customer.countDocuments();
+    let customer = new Customer({ ...req.body, id: customers + 1 });
     await customer.save();
     return res.status(200).json({
       message: "Customer added successfully.",
       title: "Success",
       color: "green",
-      data: null,
+      data: customer,
     });
   }
   // Read All Customers

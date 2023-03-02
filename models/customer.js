@@ -21,6 +21,7 @@ var customerSchema = new Schema({
     required: true,
     minlength: 10,
     maxlength: 10,
+    unique: true,
   },
   address: {
     type: String,
@@ -32,7 +33,7 @@ var customerSchema = new Schema({
   },
   comments: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
