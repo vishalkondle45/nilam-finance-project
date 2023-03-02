@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { MantineProvider } from "@mantine/core";
+import { Box, MantineProvider } from "@mantine/core";
 import { SessionProvider } from "next-auth/react";
 import { NotificationsProvider } from "@mantine/notifications";
 
@@ -21,13 +21,14 @@ export default function App({
         withGlobalStyles
         withNormalizeCSS
         theme={{
-          /** Put your mantine theme override here */
           colorScheme: "light",
         }}
       >
         <NotificationsProvider>
           <SessionProvider session={session}>
-            <Component {...pageProps} />
+            <div style={{ padding: "16px" }}>
+              <Component {...pageProps} />
+            </div>
           </SessionProvider>
         </NotificationsProvider>
       </MantineProvider>

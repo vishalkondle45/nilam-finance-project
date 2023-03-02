@@ -2,21 +2,37 @@ import mongoose from "mongoose";
 var Schema = mongoose.Schema;
 
 var customerSchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
   },
-  email: {
+  mobile: {
+    type: Number,
+    required: true,
+    minlength: 10,
+    maxlength: 10,
+  },
+  aadhar: {
+    type: Number,
+    required: true,
+    minlength: 10,
+    maxlength: 10,
+  },
+  address: {
     type: String,
     required: true,
   },
-  password: {
+  surity: {
     type: String,
     required: true,
   },
-  since: {
-    type: Date,
-    default: Date.now,
+  comments: {
+    type: String,
+    required: true,
   },
 });
 

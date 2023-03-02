@@ -10,6 +10,8 @@ import {
   Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import { useRouter } from "next/router";
+import { signOut, useSession } from "next-auth/react";
 // import { MantineLogo } from "@mantine/ds";
 
 const HEADER_HEIGHT = "3.75rem";
@@ -107,34 +109,44 @@ export function Navbar() {
       link: "/installments",
       label: "Installments",
     },
-    {
-      link: "/logout",
-      label: "Logout",
-    },
   ];
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(links[0].link);
   const { classes, cx } = useStyles();
+  const router = useRouter();
+  const { data: session } = useSession({
+    required: true,
+  });
+
+  if (!session) {
+    return <></>;
+  }
 
   const items = links.map((link) => (
-    <a
+    <Text
       key={link.label}
-      href={link.link}
       className={cx(classes.link, {
         [classes.linkActive]: active === link.link,
       })}
+      sx={{ cursor: "pointer" }}
       onClick={(event) => {
         event.preventDefault();
+        router.push(link.link);
         setActive(link.link);
         close();
       }}
     >
       {link.label}
-    </a>
+    </Text>
   ));
 
   return (
-    <Header height={HEADER_HEIGHT} mb={120} className={classes.root}>
+    <Header
+      height={HEADER_HEIGHT}
+      mb={10}
+      mt={"-10px"}
+      className={classes.root}
+    >
       <Container className={classes.header}>
         {/* <MantineLogo size={28} /> */}
         <Text
@@ -149,6 +161,21 @@ export function Navbar() {
         </Text>
         <Group spacing={5} className={classes.links}>
           {items}
+          <Text
+            key={"Logout"}
+            className={cx(classes.link, {
+              [classes.linkActive]: active === "/logout",
+            })}
+            sx={{ cursor: "pointer" }}
+            onClick={(event) => {
+              event.preventDefault();
+              signOut();
+              router.push("/login");
+              close();
+            }}
+          >
+            {"Logout"}
+          </Text>
         </Group>
 
         <Burger
@@ -162,6 +189,20 @@ export function Navbar() {
           {(styles) => (
             <Paper className={classes.dropdown} withBorder style={styles}>
               {items}
+              <a
+                key={"Logout"}
+                className={cx(classes.link, {
+                  [classes.linkActive]: active === "/logout",
+                })}
+                onClick={(event) => {
+                  event.preventDefault();
+                  signOut();
+                  router.push("/login");
+                  close();
+                }}
+              >
+                {"Logout"}
+              </a>
             </Paper>
           )}
         </Transition>

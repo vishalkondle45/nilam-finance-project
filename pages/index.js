@@ -1,16 +1,6 @@
 import { Navbar } from "@/components/Navbar";
-import { Button } from "@mantine/core";
-import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 export default function Home() {
-  const { data: session } = useSession({
-    required: true,
-  });
-
-  if (!session) {
-    return <></>;
-  }
-
   return (
     <>
       <Head>
@@ -20,9 +10,6 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <Button color={"red"} onClick={() => signOut()}>
-        SignOut
-      </Button>
     </>
   );
 }
