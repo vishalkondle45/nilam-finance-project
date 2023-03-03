@@ -15,7 +15,6 @@ const handler = async (req, res) => {
     });
   }
 
-  console.log(req.body);
   // New Customer
   if (req.method === "POST") {
     let customers = await Customer.countDocuments();

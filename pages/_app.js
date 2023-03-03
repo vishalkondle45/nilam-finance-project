@@ -2,6 +2,7 @@ import Head from "next/head";
 import { Box, MantineProvider } from "@mantine/core";
 import { SessionProvider } from "next-auth/react";
 import { NotificationsProvider } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 
 export default function App({
   Component,
@@ -25,11 +26,13 @@ export default function App({
         }}
       >
         <NotificationsProvider>
-          <SessionProvider session={session}>
-            <div style={{ padding: "16px" }}>
-              <Component {...pageProps} />
-            </div>
-          </SessionProvider>
+          <ModalsProvider>
+            <SessionProvider session={session}>
+              <div style={{ padding: "16px" }}>
+                <Component {...pageProps} />
+              </div>
+            </SessionProvider>
+          </ModalsProvider>
         </NotificationsProvider>
       </MantineProvider>
     </>
