@@ -25,11 +25,9 @@ const Customers = () => {
   const [customers, setCustomers] = useState([]);
 
   const getCustomers = async () => {
-    const { data } = await axios
-      .get(`http://localhost:3000/api/customer`)
-      .catch((error) => {
-        console.log(error);
-      });
+    const { data } = await axios.get(`/api/customer`).catch((error) => {
+      console.log(error);
+    });
     setCustomers(data.data);
   };
   useEffect(() => {
@@ -37,11 +35,9 @@ const Customers = () => {
   }, []);
 
   const getCustomer = async (id) => {
-    const { data } = await axios
-      .get(`http://localhost:3000/api/customer/${id}`)
-      .catch((error) => {
-        console.log(error);
-      });
+    const { data } = await axios.get(`/api/customer/${id}`).catch((error) => {
+      console.log(error);
+    });
     form1.setValues(data.data);
   };
   useEffect(() => {
@@ -129,7 +125,7 @@ const Customers = () => {
 
   const handleSubmit = async (values) => {
     axios
-      .post(`http://localhost:3000/api/customer`, values)
+      .post(`/api/customer`, values)
       .then((response) => {
         showNotification({
           title: response.data.title,
@@ -155,7 +151,7 @@ const Customers = () => {
 
   const handleUpdate = async (values) => {
     axios
-      .put(`http://localhost:3000/api/customer/${values.id}`, values)
+      .put(`/api/customer/${values.id}`, values)
       .then((response) => {
         showNotification({
           title: response.data.title,
@@ -182,7 +178,7 @@ const Customers = () => {
 
   const handleDelete = async (id) => {
     axios
-      .delete(`http://localhost:3000/api/customer/${id}`)
+      .delete(`/api/customer/${id}`)
       .then((response) => {
         showNotification({
           title: response.data.title,
