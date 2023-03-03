@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { Box, MantineProvider } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { SessionProvider } from "next-auth/react";
 import { NotificationsProvider } from "@mantine/notifications";
 import { ModalsProvider } from "@mantine/modals";
+import "../styles/globals.css";
 
 export default function App({
   Component,

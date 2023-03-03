@@ -109,11 +109,16 @@ export function Navbar() {
       link: "/installments",
       label: "Installments",
     },
+    {
+      link: "/groups",
+      label: "Groups",
+    },
   ];
   const [opened, { toggle, close }] = useDisclosure(false);
-  const [active, setActive] = useState(links[0].link);
-  const { classes, cx } = useStyles();
   const router = useRouter();
+  const [active, setActive] = useState(router.pathname);
+  // links[0].link
+  const { classes, cx } = useStyles();
   const { data: session } = useSession({
     required: true,
   });
