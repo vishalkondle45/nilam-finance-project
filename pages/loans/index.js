@@ -250,6 +250,17 @@ const Customers = () => {
       onConfirm: () => handleDelete(row.original.id),
     });
 
+  const [groups, setGroups] = useState([]);
+  const getGroups = async () => {
+    const { data } = await axios.get(`/api/group/getAll`).catch((error) => {
+      console.log(error);
+    });
+    setGroups(data.data);
+  };
+  useEffect(() => {
+    getGroups();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -369,7 +380,7 @@ const Customers = () => {
             placeholder="Group"
             searchable
             nothingFound="No Groups"
-            data={["Group 1", "Group 2"]}
+            data={groups}
             {...form.getInputProps("group")}
           />
           <Button fullWidth type="submit" mt="md">
@@ -463,7 +474,7 @@ const Customers = () => {
             placeholder="Group"
             searchable
             nothingFound="No Groups"
-            data={["Group 1", "Group 2"]}
+            data={groups}
             {...form1.getInputProps("group")}
           />
           <Button fullWidth type="submit" mt="md">
