@@ -2,7 +2,7 @@ import { Navbar } from "@/components/Navbar";
 import { ActionIcon, Button, Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
-import { IconCirclePlus } from "@tabler/icons";
+import { IconCheck, IconCirclePlus, IconX } from "@tabler/icons";
 import { IconTrashFilled, IconTrashXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import dayjs from "dayjs";
