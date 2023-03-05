@@ -10,7 +10,6 @@ import {
   Textarea,
   TextInput,
 } from "@mantine/core";
-import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";

@@ -107,7 +107,7 @@ export function Navbar() {
     },
     {
       link: "/installments",
-      label: "Installments",
+      label: "All Installments",
     },
     {
       link: "/groups",

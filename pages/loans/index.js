@@ -14,14 +14,17 @@ import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
-import { IconPencil, IconCheck, IconX } from "@tabler/icons";
+import { IconPencil, IconCheck, IconX, IconCirclePlus } from "@tabler/icons";
 import { IconTrashXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import dayjs from "dayjs";
 import { MantineReactTable } from "mantine-react-table";
+import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
 
 const Customers = () => {
+  const router = useRouter();
+
   const form = useForm({
     initialValues: {
       customer: "",
@@ -68,7 +71,11 @@ const Customers = () => {
     const { data } = await axios.get(`/api/loan/${id}`).catch((error) => {
       console.log(error);
     });
-    form1.setValues(data.data);
+    form1.setValues({
+      ...data.data,
+      date: new Date(data.data.date),
+      nextDue: new Date(data.data.nextDue),
+    });
   };
 
   useEffect(() => {
@@ -261,6 +268,12 @@ const Customers = () => {
         }}
         renderRowActions={({ row }) => (
           <Flex sx={{ whiteSpace: "nowrap" }}>
+            <ActionIcon
+              color="green"
+              onClick={() => router.push(`installments/${row.original.id}`)}
+            >
+              <IconCirclePlus size="18" />
+            </ActionIcon>
             <ActionIcon
               color="blue"
               onClick={() => setEditOpen(row.original.id)}
