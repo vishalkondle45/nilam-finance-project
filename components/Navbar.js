@@ -162,7 +162,7 @@ export function Navbar() {
           fz="xl"
           fw={700}
         >
-          Nilam Finance
+          Neelam Finance
         </Text>
         <Group spacing={5} className={classes.links}>
           {items}

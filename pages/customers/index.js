@@ -223,7 +223,7 @@ const Customers = () => {
         enableRowActions
         positionActionsColumn="last"
         enableStickyHeader
-        enablePagination={false}
+        enablePagination={true}
         mantineTableContainerProps={{
           sx: {
             maxHeight: "70vh",
