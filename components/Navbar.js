@@ -8,13 +8,14 @@ import {
   Paper,
   Transition,
   Text,
+  Image,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
 // import { MantineLogo } from "@mantine/ds";
 
-const HEADER_HEIGHT = "3.75rem";
+const HEADER_HEIGHT = "5rem";
 
 const useStyles = createStyles((theme) => ({
   root: {
@@ -153,7 +154,6 @@ export function Navbar() {
       className={classes.root}
     >
       <Container className={classes.header}>
-        {/* <MantineLogo size={28} /> */}
         <Text
           variant="gradient"
           gradient={{ from: "indigo", to: "cyan", deg: 45 }}
@@ -162,8 +162,15 @@ export function Navbar() {
           fz="xl"
           fw={700}
         >
-          Neelam Finance
+          <Image
+            maw={70}
+            mx="auto"
+            radius="md"
+            src="logo.jpg"
+            alt="Random image"
+          />
         </Text>
+
         <Group spacing={5} className={classes.links}>
           {items}
           <Text
