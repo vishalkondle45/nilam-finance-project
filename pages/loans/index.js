@@ -31,6 +31,7 @@ const Customers = () => {
       loanAmount: 0,
       charges: 0,
       installment: 100,
+      interest:0,
       count: 10,
       date: new Date(),
       nextDue: new Date(),
@@ -102,6 +103,11 @@ const Customers = () => {
         size: 10,
       },
       {
+        accessorKey: "interest",
+        header: "Interest",
+        size: 10,
+      },
+      {
         accessorKey: "installment",
         header: "Installment",
         size: 10,
@@ -150,6 +156,7 @@ const Customers = () => {
       charges: 0,
       installment: 100,
       count: 10,
+      interest: 0,
       date: new Date(),
       nextDue: new Date(),
       comments: "",
@@ -328,6 +335,13 @@ const Customers = () => {
           />
           <NumberInput
             withAsterisk
+            label="Interest Amount"
+            placeholder="Interest Amount"
+            step={5}
+            {...form.getInputProps("interest")}
+          />
+          <NumberInput
+            withAsterisk
             label="Extra Charges"
             placeholder="Extra Charges"
             step={500}
@@ -419,6 +433,13 @@ const Customers = () => {
             placeholder="Loan Amount"
             step={500}
             {...form1.getInputProps("loanAmount")}
+          />
+          <NumberInput
+            withAsterisk
+            label="Interest Amount"
+            placeholder="Interest Amount"
+            step={5}
+            {...form1.getInputProps("interest")}
           />
           <NumberInput
             withAsterisk

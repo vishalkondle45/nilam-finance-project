@@ -166,7 +166,7 @@ export function Navbar() {
             maw={70}
             mx="auto"
             radius="md"
-            src="logo.jpg"
+            src="/logo.jpg"
             alt="Random image"
           />
         </Text>

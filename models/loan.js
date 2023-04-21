@@ -19,6 +19,10 @@ var loanSchema = new Schema(
       type: Number,
       default: 0,
     },
+    interest: {
+      type: Number,
+      default: 0,
+    },
     charges: {
       type: Number,
       default: 0,
