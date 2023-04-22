@@ -56,6 +56,10 @@ const handler = async (req, res) => {
       var seventeenMonthsBC = await loan.countDocuments({count: 17});
       // 12 Months BC Count
       var twelveMonthsBC = await loan.countDocuments({count: 12});
+
+      var totalBC = await loan.find({ $or: [{ count: 12 }, { count: 52 }, { count: 17 }, { count: 20 }] });
+      var totalNF = await loan.find({ $or: [{ count: 10 }, { count: 100 }] });
+
       return res.status(200).json({
         error: false,
         ok: true,
@@ -156,6 +160,20 @@ const handler = async (req, res) => {
             "stats": fiftyTwoWeeksBC,
             "progress": 100,
             "color": "cyan",
+            "icon": "number"
+          },
+          {
+            "label": "Total B.C. Count",
+            "stats": totalBC.length,
+            "progress": 100,
+            "color": "dark",
+            "icon": "number"
+          },
+          {
+            "label": "Total N.F. Count",
+            "stats": totalNF.length,
+            "progress": 100,
+            "color": "gray",
             "icon": "number"
           },
         ],
