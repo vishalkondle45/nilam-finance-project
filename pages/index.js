@@ -11,7 +11,7 @@ export default function Home() {
   const [visible, { toggle }] = useDisclosure(true);
   useEffect(()=>{    
     const getData = async () => {
-      const res = await axios.get("http://localhost:3000/api/getAll");
+      const res = await axios.get("/api/getAll");
       setData(res.data.data)
       toggle();
     }
