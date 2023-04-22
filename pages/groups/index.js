@@ -14,9 +14,10 @@ import { useForm } from "@mantine/form";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconPencil, IconCheck, IconX } from "@tabler/icons";
-import { IconTrashXFilled } from "@tabler/icons-react";
+import { IconDownload, IconTrashXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import dayjs from "dayjs";
+import exportFromJSON from "export-from-json";
 import { MantineReactTable } from "mantine-react-table";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -58,6 +59,13 @@ const Customers = () => {
       getGroup(editOpen);
     }
   }, [editOpen]);
+
+  const download = () => {
+    const fileName = 'groups'
+    const exportType =  exportFromJSON.types.csv
+    exportFromJSON({ data:groups, fileName, exportType })
+  }
+
 
   const columns = useMemo(
     () => [
@@ -222,6 +230,14 @@ const Customers = () => {
               onClick={() => setOpened(true)}
             >
               New Group
+            </Button>
+            <Button
+              variant="contained"
+              color="dark"
+              onClick={download}
+              leftIcon={<IconDownload/>}
+            >
+              Download
             </Button>
           </>
         )}

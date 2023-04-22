@@ -15,9 +15,10 @@ import { useForm } from "@mantine/form";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconPencil, IconCheck, IconX, IconCirclePlus } from "@tabler/icons";
-import { IconTrashXFilled } from "@tabler/icons-react";
+import { IconDownload, IconTrashXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import dayjs from "dayjs";
+import exportFromJSON from "export-from-json";
 import { MantineReactTable } from "mantine-react-table";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
@@ -268,6 +269,13 @@ const Customers = () => {
     getGroups();
   }, []);
 
+  const download = () => {
+    const fileName = `Loans-${dayjs().format('DD-MM-YYYY HH-mm')}`
+    const exportType =  exportFromJSON.types.csv
+    exportFromJSON({ data:loans, fileName, exportType })
+  }
+
+
   return (
     <>
       <Navbar />
@@ -311,6 +319,14 @@ const Customers = () => {
               onClick={() => setOpened(true)}
             >
               New Loan
+            </Button>
+            <Button
+              variant="contained"
+              color="dark"
+              onClick={download}
+              leftIcon={<IconDownload />}
+            >
+              Download
             </Button>
           </>
         )}

@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/Navbar";
+import exportFromJSON from 'export-from-json'
 import {
   ActionIcon,
   Button,
@@ -12,11 +13,12 @@ import { useForm } from "@mantine/form";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconTrash, IconPencil, IconCheck, IconX } from "@tabler/icons";
-import { IconTrashXFilled } from "@tabler/icons-react";
+import { IconDownload, IconTrashXFilled } from "@tabler/icons-react";
 // import { IconTrashFilled } from "@tabler/icons-react";
 import axios from "axios";
 import { MantineReactTable } from "mantine-react-table";
 import React, { useEffect, useMemo, useState } from "react";
+import dayjs from "dayjs";
 
 const Customers = () => {
   const [opened, setOpened] = useState(false);
@@ -213,6 +215,12 @@ const Customers = () => {
       onConfirm: () => handleDelete(row.original.id),
     });
 
+    const download = () => {
+      const fileName = `Customers-${dayjs().format('DD-MM-YYYY HH-mm')}`
+      const exportType =  exportFromJSON.types.csv
+      exportFromJSON({ data:customers, fileName, exportType })
+    }
+
   return (
     <>
       <Navbar />
@@ -250,6 +258,14 @@ const Customers = () => {
               onClick={() => setOpened(true)}
             >
               New Customer
+            </Button>
+            <Button
+              variant="contained"
+              color="dark"
+              onClick={download}
+              leftIcon={<IconDownload/>}
+            >
+              Download
             </Button>
           </>
         )}

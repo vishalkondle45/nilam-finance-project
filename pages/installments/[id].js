@@ -14,9 +14,10 @@ import { useForm } from "@mantine/form";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconCheck, IconX } from "@tabler/icons";
-import { IconTrashXFilled } from "@tabler/icons-react";
+import { IconDownload, IconTrashXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import dayjs from "dayjs";
+import exportFromJSON from "export-from-json";
 import { MantineReactTable } from "mantine-react-table";
 import { useRouter } from "next/router";
 import React, { useEffect, useMemo, useState } from "react";
@@ -200,6 +201,12 @@ const Customers = () => {
     }
   }, [id]);
 
+  const download = () => {
+    const fileName = `${router.query.id}-installments-${dayjs().format('DD-MM-YYYY HH-mm')}`
+    const exportType =  exportFromJSON.types.csv
+    exportFromJSON({ data:installments, fileName, exportType })
+  }
+
   return (
     <>
       <Navbar />
@@ -232,6 +239,14 @@ const Customers = () => {
               disabled={installments.length === loan?.count}
             >
               New Installment
+            </Button>
+            <Button
+              variant="contained"
+              color="dark"
+              onClick={download}
+              leftIcon={<IconDownload />}
+            >
+              Download
             </Button>
           </>
         )}

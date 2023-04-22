@@ -3,9 +3,10 @@ import { ActionIcon, Button, Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconCheck, IconCirclePlus, IconX } from "@tabler/icons";
-import { IconTrashFilled, IconTrashXFilled } from "@tabler/icons-react";
+import { IconDownload, IconTrashFilled, IconTrashXFilled } from "@tabler/icons-react";
 import axios from "axios";
 import dayjs from "dayjs";
+import exportFromJSON from "export-from-json";
 import { MantineReactTable } from "mantine-react-table";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -94,6 +95,13 @@ const Customers = () => {
       });
   };
 
+  const download = () => {
+    const fileName = `Installments-${dayjs().format('DD-MM-YYYY HH-mm')}`
+    const exportType =  exportFromJSON.types.csv
+    exportFromJSON({ data:installments, fileName, exportType })
+  }
+
+
   const openModal = (row) =>
     openConfirmModal({
       title: "Are you sure ?",
@@ -133,6 +141,14 @@ const Customers = () => {
           <>
             <Button variant="contained" color="teal" disabled>
               All Installments
+            </Button>
+            <Button
+              variant="contained"
+              color="dark"
+              onClick={download}
+              leftIcon={<IconDownload />}
+            >
+              Download
             </Button>
           </>
         )}
