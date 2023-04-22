@@ -168,6 +168,7 @@ export function Navbar() {
           radius="md"
           src="/logo.jpg"
           alt="Random image"
+          sx={{ cursor: "pointer" }}
           onClick={()=>router.push("/")}
         />
         </Text>
