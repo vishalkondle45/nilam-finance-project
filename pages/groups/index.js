@@ -3,6 +3,7 @@ import {
   ActionIcon,
   Button,
   Flex,
+  LoadingOverlay,
   Modal,
   NumberInput,
   Select,
@@ -11,6 +12,7 @@ import {
   TextInput,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconPencil, IconCheck, IconX } from "@tabler/icons";
@@ -22,6 +24,7 @@ import { MantineReactTable } from "mantine-react-table";
 import React, { useEffect, useMemo, useState } from "react";
 
 const Customers = () => {
+  const [visible, { toggle }] = useDisclosure(true);
   const form = useForm({
     initialValues: {
       name: "",
@@ -42,6 +45,7 @@ const Customers = () => {
       console.log(error);
     });
     setGroups(data.data);
+    toggle()
   };
   useEffect(() => {
     getGroups();
@@ -196,6 +200,7 @@ const Customers = () => {
   return (
     <>
       <Navbar />
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <MantineReactTable
         columns={columns}
         data={groups}

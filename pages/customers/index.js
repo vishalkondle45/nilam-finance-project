@@ -4,6 +4,7 @@ import {
   ActionIcon,
   Button,
   Flex,
+  LoadingOverlay,
   Modal,
   Text,
   Textarea,
@@ -19,18 +20,21 @@ import axios from "axios";
 import { MantineReactTable } from "mantine-react-table";
 import React, { useEffect, useMemo, useState } from "react";
 import dayjs from "dayjs";
+import { useDisclosure } from "@mantine/hooks";
 
 const Customers = () => {
   const [opened, setOpened] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
   const [customers, setCustomers] = useState([]);
+  const [visible, { toggle }] = useDisclosure(true);
 
   const getCustomers = async () => {
     const { data } = await axios.get(`/api/customer`).catch((error) => {
       console.log(error);
     });
     setCustomers(data.data);
+    toggle();
   };
   useEffect(() => {
     getCustomers();
@@ -224,6 +228,7 @@ const Customers = () => {
   return (
     <>
       <Navbar />
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <MantineReactTable
         columns={columns}
         data={customers}

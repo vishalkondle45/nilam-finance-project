@@ -3,6 +3,7 @@ import {
   ActionIcon,
   Button,
   Flex,
+  LoadingOverlay,
   Modal,
   NumberInput,
   Select,
@@ -12,6 +13,7 @@ import {
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import { useDisclosure } from "@mantine/hooks";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconPencil, IconCheck, IconX, IconCirclePlus } from "@tabler/icons";
@@ -25,6 +27,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 const Customers = () => {
   const router = useRouter();
+  const [visible, { toggle }] = useDisclosure(true);
 
   const form = useForm({
     initialValues: {
@@ -67,6 +70,7 @@ const Customers = () => {
   useEffect(() => {
     getLoans();
     getCustomers();
+    toggle()
   }, []);
 
   const getLoan = async (id) => {
@@ -279,6 +283,7 @@ const Customers = () => {
   return (
     <>
       <Navbar />
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <MantineReactTable
         columns={columns}
         data={loans}

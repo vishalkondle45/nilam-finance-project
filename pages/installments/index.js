@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/Navbar";
-import { ActionIcon, Button, Text } from "@mantine/core";
+import { ActionIcon, Button, LoadingOverlay, Text } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 import { openConfirmModal } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { IconCheck, IconCirclePlus, IconX } from "@tabler/icons";
@@ -12,12 +13,14 @@ import React, { useEffect, useMemo, useState } from "react";
 
 const Customers = () => {
   const [installments, setInstallments] = useState([]);
+  const [visible, { toggle }] = useDisclosure(true);
 
   const getInstallments = async () => {
     const { data } = await axios.get(`/api/installment`).catch((error) => {
       console.log(error);
     });
     setInstallments(data.data);
+    toggle();
   };
 
   useEffect(() => {
@@ -119,6 +122,7 @@ const Customers = () => {
   return (
     <>
       <Navbar />
+      <LoadingOverlay visible={visible} overlayBlur={2} />
       <MantineReactTable
         columns={columns}
         data={installments}

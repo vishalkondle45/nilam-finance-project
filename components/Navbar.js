@@ -162,13 +162,14 @@ export function Navbar() {
           fz="xl"
           fw={700}
         >
-          <Image
-            maw={70}
-            mx="auto"
-            radius="md"
-            src="/logo.jpg"
-            alt="Random image"
-          />
+        <Image
+          maw={70}
+          mx="auto"
+          radius="md"
+          src="/logo.jpg"
+          alt="Random image"
+          onClick={()=>router.push("/")}
+        />
         </Text>
 
         <Group spacing={5} className={classes.links}>
