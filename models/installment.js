@@ -19,6 +19,10 @@ var installmentSchema = new Schema(
       type: Number,
       default: 0,
     },
+    interest: {
+      type: Number,
+      default: 0,
+    },
     fine: {
       type: Number,
       default: 0,

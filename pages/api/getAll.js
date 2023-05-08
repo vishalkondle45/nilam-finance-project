@@ -35,7 +35,7 @@ const handler = async (req, res) => {
         { $group: { _id: null, amount: { $sum: "$installment" } } },
       ]);
       // Total Interest Collected
-      var interestSum = await loan.aggregate([
+      var NFInterestSum = await loan.aggregate([
         { $group: { _id: null, amount: { $sum: "$interest" } } },
       ]);
       // Total Fees Collected
@@ -56,6 +56,10 @@ const handler = async (req, res) => {
       var seventeenMonthsBC = await loan.countDocuments({ count: 17 });
       // 12 Months BC Count
       var twelveMonthsBC = await loan.countDocuments({ count: 12 });
+
+      var BCInterestSum = await installment.aggregate([
+        { $group: { _id: null, amount: { $sum: "$interest" } } },
+      ]);
 
       var totalBC = await loan.find({
         $or: [{ count: 12 }, { count: 52 }, { count: 17 }, { count: 20 }],
@@ -96,28 +100,28 @@ const handler = async (req, res) => {
           },
           {
             label: "Total Money Distributed",
-            stats: loansSum[0].amount,
+            stats: loansSum[0]?.amount || 0,
             progress: 100,
             color: "lime",
             icon: "currency",
           },
           {
             label: "Total Money Collected",
-            stats: installmentsSum[0].amount,
+            stats: installmentsSum[0]?.amount || 0,
             progress: 100,
             color: "pink",
             icon: "ruppee",
           },
           {
             label: "Total Interest Collected",
-            stats: interestSum[0].amount,
+            stats: NFInterestSum[0]?.amount || 0,
             progress: 100,
             color: "grape",
             icon: "ruppee",
           },
           {
             label: "Total Fees Collected",
-            stats: chargesSum[0].amount,
+            stats: chargesSum[0]?.amount || 0,
             progress: 100,
             color: "violet",
             icon: "ruppee",
@@ -152,30 +156,37 @@ const handler = async (req, res) => {
           },
           {
             label: "52 Weeks B.C. Count",
-            stats: twentyMonthsBC,
+            stats: fiftyTwoWeeksBC,
             progress: 100,
             color: "indigo",
             icon: "number",
           },
           {
             label: "20 Month B.C. Count",
-            stats: fiftyTwoWeeksBC,
+            stats: twentyMonthsBC,
             progress: 100,
             color: "cyan",
             icon: "number",
           },
           {
             label: "Total B.C. Count",
-            stats: totalBC.length,
+            stats: totalBC?.length,
             progress: 100,
             color: "dark",
             icon: "number",
           },
           {
             label: "Total N.F. Count",
-            stats: totalNF.length,
+            stats: totalNF?.length,
             progress: 100,
             color: "gray",
+            icon: "number",
+          },
+          {
+            label: "Total B.C. Interest",
+            stats: BCInterestSum[0]?.amount || 0,
+            progress: 100,
+            color: "pink",
             icon: "number",
           },
         ],

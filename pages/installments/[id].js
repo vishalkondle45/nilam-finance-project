@@ -31,6 +31,7 @@ const Customers = () => {
       customer: "",
       loan: null,
       installment: null,
+      interest: 0,
       fine: 0,
       dueDate: new Date(),
       paidDate: new Date(),
@@ -70,6 +71,11 @@ const Customers = () => {
       {
         accessorKey: "installment",
         header: "Installment",
+        size: 10,
+      },
+      {
+        accessorKey: "interest",
+        header: "Interest",
         size: 10,
       },
       {
@@ -206,10 +212,12 @@ const Customers = () => {
   }, [id]);
 
   const download = () => {
-    const fileName = `${router.query.id}-installments-${dayjs().format('DD-MM-YYYY HH-mm')}`
-    const exportType =  exportFromJSON.types.csv
-    exportFromJSON({ data:installments, fileName, exportType })
-  }
+    const fileName = `${router.query.id}-installments-${dayjs().format(
+      "DD-MM-YYYY HH-mm"
+    )}`;
+    const exportType = exportFromJSON.types.csv;
+    exportFromJSON({ data: installments, fileName, exportType });
+  };
 
   return (
     <>
@@ -296,14 +304,24 @@ const Customers = () => {
               disabled
             />
           </Flex>
-          <NumberInput
-            withAsterisk
-            label="Fine"
-            placeholder="Fine"
-            step={5}
-            min={0}
-            {...form.getInputProps("fine")}
-          />
+          <Flex gap="xs">
+            <NumberInput
+              withAsterisk
+              label="Interest"
+              placeholder="Interest"
+              step={5}
+              min={0}
+              {...form.getInputProps("interest")}
+            />
+            <NumberInput
+              withAsterisk
+              label="Fine"
+              placeholder="Fine"
+              step={5}
+              min={0}
+              {...form.getInputProps("fine")}
+            />
+          </Flex>
           <Flex gap="xs">
             <DatePicker
               placeholder="Due Date"
