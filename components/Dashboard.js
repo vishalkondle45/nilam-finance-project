@@ -1,5 +1,22 @@
-import { RingProgress, Text, SimpleGrid, Paper, Center, Group } from '@mantine/core';
-import { IconArrowUpRight, IconArrowDownRight, IconUsers, IconCurrencyRupee, IconCoinRupee, IconBuildingBank, IconUserCircle, IconNumber0, IconCircleNumber0 } from '@tabler/icons-react';
+import {
+  RingProgress,
+  Text,
+  SimpleGrid,
+  Paper,
+  Center,
+  Group,
+} from "@mantine/core";
+import {
+  IconArrowUpRight,
+  IconArrowDownRight,
+  IconUsers,
+  IconCurrencyRupee,
+  IconCoinRupee,
+  IconBuildingBank,
+  IconUserCircle,
+  IconNumber0,
+  IconCircleNumber0,
+} from "@tabler/icons-react";
 
 const icons = {
   up: IconArrowUpRight,
@@ -9,15 +26,14 @@ const icons = {
   ruppee: IconCoinRupee,
   bank: IconBuildingBank,
   users: IconUserCircle,
-  number: IconCircleNumber0
+  number: IconCircleNumber0,
 };
 
 export default function StatsRing({ data }) {
-
   const stats = data.map((stat) => {
     const Icon = icons[stat.icon];
     return (
-      <Paper withBorder radius="md" p="xs" key={stat.label}>
+      <Paper withBorder radius="md" p="xs" key={stat.label} shadow="xl">
         <Group>
           <RingProgress
             size={80}
@@ -45,7 +61,7 @@ export default function StatsRing({ data }) {
   });
 
   return (
-    <SimpleGrid cols={4} breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
+    <SimpleGrid cols={4} breakpoints={[{ maxWidth: "sm", cols: 1 }]}>
       {stats}
     </SimpleGrid>
   );
